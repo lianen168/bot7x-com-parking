@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOT7X.COM | Lucky AI Robot Domain</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Chakra+Petch:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --luck-gold: #FFD700;
+            --bot-blue: #4D8BFF;
+            --seven-purple: #9D4EDD;
+            --x-red: #FF3333;
+            --dark-casino: #1a0f1c;
+            --slot-machine: #2d1b3d;
+            --neon-glow: rgba(255, 215, 0, 0.4);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Chakra Petch', sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0f1c 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 老虎机背景效果 */
+        .slot-machine-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 51, 51, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        /* 旋转数字背景 */
+        .spinning-numbers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            font-size: 3rem;
+            font-family: 'Orbitron', monospace;
+            color: var(--luck-gold);
+            overflow: hidden;
+        }
+        
+        .spinning-number {
+            position: absolute;
+            animation: spinNumber 20s linear infinite;
+        }
+        
+        @keyframes spinNumber {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        
+        /* 主容器 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 幸运头部 */
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--luck-gold), transparent);
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--x-red), transparent);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            margin-bottom: 1rem;
+            text-shadow: 
+                0 0 10px var(--neon-glow),
+                0 0 20px var(--neon-glow),
+                0 0 30px var(--neon-glow);
+        }
+        
+        .logo-bot {
+            color: var(--bot-blue);
+            display: inline-block;
+            animation: botShake 3s infinite;
+        }
+        
+        .logo-7 {
+            color: var(--luck-gold);
+            display: inline-block;
+            animation: luckySpin 5s infinite linear;
+            position: relative;
+        }
+        
+        .logo-7::before {
+            content: '🎰';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+        }
+        
+        .logo-x {
+            color: var(--x-red);
+            display: inline-block;
+            animation: xBlink 2s infinite alternate;
+        }
+        
+        @keyframes botShake {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-5px) rotate(1deg); }
+        }
+        
+        @keyframes luckySpin {
+            0% { transform: scale(1) rotate(0deg); text-shadow: 0 0 10px var(--luck-gold); }
+            50% { transform: scale(1.1) rotate(180deg); text-shadow: 0 0 30px var(--luck-gold); }
+            100% { transform: scale(1) rotate(360deg); text-shadow: 0 0 10px var(--luck-gold); }
+        }
+        
+        @keyframes xBlink {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .luck-stats {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(157, 78, 221, 0.1));
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        /* 幸运轮盘部分 */
+        .luck-wheel {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2.5rem;
+            background: rgba(45, 27, 61, 0.7);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .luck-wheel::before {
+            content: '🎯';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            background: var(--dark-casino);
+            padding: 0 1rem;
+        }
+        
+        .luck-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--luck-gold);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .luck-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #e0e0e0;
+        }
+        
+        .luck-highlight {
+            color: var(--luck-gold);
+            font-weight: 600;
+        }
+        
+        /* 5字符优势展示 */
+        .char-advantages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 4rem 0;
+        }
+        
+        .advantage {
+            background: rgba(26, 15, 28, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            border-top: 4px solid transparent;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .advantage:nth-child(1) { border-top-color: var(--bot-blue); }
+        .advantage:nth-child(2) { border-top-color: var(--luck-gold); }
+        .advantage:nth-child(3) { border-top-color: var(--x-red); }
+        
+        .advantage:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .advantage-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .advantage-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .advantage-desc {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            line-height: 1.5;
+        }
+        
+        /* 幸运价格部分 */
+        .luck-pricing {
+            margin: 4rem 0;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(157, 78, 221, 0.1));
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+        
+        .luck-pricing::before {
+            content: '💰';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            background: var(--dark-casino);
+            padding: 0 1rem;
+        }
+        
+        .price-display {
+            margin-bottom: 2rem;
+        }
+        
+        .luck-price {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--luck-gold);
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-note {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* 幸运三期付款 */
+        .luck-payment-plan {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .luck-phase {
+            background: rgba(26, 15, 28, 0.9);
+            padding: 1.8rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .luck-phase::before {
+            content: '🎲';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            opacity: 0.3;
+            font-size: 1.5rem;
+        }
+        
+        .phase-luck-number {
+            font-size: 2.5rem;
+            color: var(--luck-gold);
+            margin-bottom: 0.5rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .phase-luck-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .phase-luck-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* 幸运按钮 */
+        .luck-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--bot-blue), var(--luck-gold));
+            color: var(--dark-casino);
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 1.3rem 4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+            border: none;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .luck-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.5);
+            background: linear-gradient(90deg, var(--luck-gold), var(--x-red));
+        }
+        
+        .luck-button::after {
+            content: '🍀';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+        }
+        
+        /* 幸运联系方式 */
+        .luck-contact {
+            margin: 5rem 0;
+            padding: 3rem;
+            background: rgba(26, 15, 28, 0.9);
+            border-radius: 20px;
+            border: 2px solid rgba(77, 139, 255, 0.3);
+            text-align: center;
+            position: relative;
+        }
+        
+        .luck-contact::before {
+            content: '📧';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            background: var(--dark-casino);
+            padding: 0 1rem;
+        }
+        
+        .contact-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--luck-gold);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .contact-subtitle {
+            color: var(--bot-blue);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        
+        .luck-email {
+            font-size: 1.5rem;
+            font-family: 'Orbitron', monospace;
+            color: var(--luck-gold);
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 1rem 0;
+            text-decoration: none;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .luck-email:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .contact-note {
+            margin-top: 1.5rem;
+            color: #777;
+            font-size: 0.9rem;
+            font-family: 'Chakra Petch', sans-serif;
+        }
+        
+        /* 幸运页脚 */
+        .luck-footer {
+            margin-top: 5rem;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(45, 27, 61, 0.8);
+            color: #666;
+            position: relative;
+        }
+        
+        .luck-footer::before {
+            content: '✨';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+        }
+        
+        .footer-info {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .luck-status {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(0, 255, 0, 0.1);
+            color: #4cff4c;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+            animation: statusPulse 2s infinite;
+        }
+        
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .logo {
+                font-size: 3rem;
+                letter-spacing: 3px;
+            }
+            
+            .luck-payment-plan {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .char-advantages {
+                grid-template-columns: 1fr;
+            }
+            
+            .luck-price {
+                font-size: 3.5rem;
+            }
+            
+            .luck-email {
+                font-size: 1.2rem;
+                padding: 0.8rem 1.5rem;
+                word-break: break-all;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slot-machine-bg"></div>
+    <div class="spinning-numbers" id="spinningNumbers"></div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-bot">BOT</span><span class="logo-7">7</span><span class="logo-x">X</span>
+            </div>
+            <div class="luck-stats">
+                5-CHAR LUCKY DOMAIN • BOT + LUCKY 7 + X • AI ROBOT FORTUNE
+            </div>
+        </header>
+        
+        <main>
+            <section class="luck-wheel">
+                <h2 class="luck-title">THE LUCKY AI ROBOT DOMAIN</h2>
+                <p class="luck-description">
+                    <span class="luck-highlight">BOT7X.COM</span> combines the power of <span class="luck-highlight">artificial intelligence</span> 
+                    with the <span class="luck-highlight">luckiest number 7</span> and the <span class="luck-highlight">mystery of X</span>. 
+                    A 5-character domain that's short, memorable, and packed with fortune potential for your next AI, crypto, or tech venture.
+                </p>
+            </section>
+            
+            <section class="char-advantages">
+                <div class="advantage">
+                    <div class="advantage-icon">🤖</div>
+                    <div class="advantage-title">BOT POWER</div>
+                    <div class="advantage-desc">
+                        Perfect for AI startups, trading bots, automation tools, and robotics companies. 
+                        The "BOT" prefix instantly communicates technology and innovation.
+                    </div>
+                </div>
+                <div class="advantage">
+                    <div class="advantage-icon">🍀</div>
+                    <div class="advantage-title">LUCKY 7</div>
+                    <div class="advantage-desc">
+                        Number 7 is universally recognized as lucky. In tech, 7 represents perfection, 
+                        completeness, and good fortune. Your brand deserves this advantage.
+                    </div>
+                </div>
+                <div class="advantage">
+                    <div class="advantage-icon">⚡</div>
+                    <div class="advantage-title">X FACTOR</div>
+                    <div class="advantage-desc">
+                        X represents the unknown, the variable, the multiplier. It adds mystery, 
+                        excitement, and unlimited potential to any tech brand.
+                    </div>
+                </div>
+            </section>
+            
+            <section class="luck-pricing">
+                <div class="price-display">
+                    <div class="luck-price">$12,700</div>
+                    <div class="price-note">LUCKY PRICE FOR A 5-CHARACTER .COM DOMAIN</div>
+                </div>
+                
+                <div class="price-note" style="margin-bottom: 2rem;">
+                    3-LUCKY PAYMENTS • FORTUNE FAVORS THE BOLD
+                </div>
+                
+                <div class="luck-payment-plan">
+                    <div class="luck-phase">
+                        <div class="phase-luck-number">🎯</div>
+                        <div class="phase-luck-amount">$4,233</div>
+                        <div class="phase-luck-desc">First Lucky Payment<br>Initial domain transfer</div>
+                    </div>
+                    <div class="luck-phase">
+                        <div class="phase-luck-number">💰</div>
+                        <div class="phase-luck-amount">$4,233</div>
+                        <div class="phase-luck-desc">Second Lucky Payment<br>Mid-term completion</div>
+                    </div>
+                    <div class="luck-phase">
+                        <div class="phase-luck-number">🏆</div>
+                        <div class="phase-luck-amount">$4,234</div>
+                        <div class="phase-luck-desc">Final Lucky Payment<br>Full ownership transfer</div>
+                    </div>
+                </div>
+                
+                <button class="luck-button" id="acquireButton">
+                    CLAIM YOUR LUCK
+                </button>
+            </section>
+            
+            <section class="luck-contact" id="contact">
+                <div class="contact-title">FORTUNE'S COMMUNICATION CHANNEL</div>
+                <div class="contact-subtitle">LUCK WORKS IN MYSTERIOUS WAYS - REACH OUT</div>
+                <div class="luck-email" id="emailDisplay">
+                    JOSHUA369X@GMAIL.COM
+                </div>
+                <div class="contact-note">
+                    24/7 LUCKY HOURS • ENCRYPTED FORTUNE TELLING • QUICK RESPONSES
+                </div>
+            </section>
+        </main>
+        
+        <footer class="luck-footer">
+            <div class="footer-info">
+                BOT7X.COM | THE LUCKY AI ROBOT DOMAIN
+                <span class="luck-status">FORTUNE ACTIVE • LUCK FLOWING</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 创建旋转的数字背景
+        function createSpinningNumbers() {
+            const container = document.getElementById('spinningNumbers');
+            const numbers = ['7', '7', '7', '🎰', '🍀', '💰', '🎯', '🏆'];
+            
+            for (let i = 0; i < 30; i++) {
+                const number = document.createElement('div');
+                number.className = 'spinning-number';
+                number.textContent = numbers[Math.floor(Math.random() * numbers.length)];
+                number.style.left = `${Math.random() * 100}%`;
+                number.style.animationDelay = `${Math.random() * 20}s`;
+                number.style.fontSize = `${Math.random() * 2 + 1.5}rem`;
+                number.style.opacity = Math.random() * 0.1 + 0.05;
+                container.appendChild(number);
+            }
+        }
+        
+        createSpinningNumbers();
+        
+        // 幸运按钮交互
+        const acquireButton = document.getElementById('acquireButton');
+        const emailDisplay = document.getElementById('emailDisplay');
+        
+        acquireButton.addEventListener('click', function() {
+            const originalText = this.textContent;
+            this.textContent = '🎰 SPINNING THE WHEEL OF FORTUNE...';
+            this.style.background = 'linear-gradient(90deg, var(--luck-gold), var(--seven-purple))';
+            
+            setTimeout(() => {
+                this.textContent = '🍀 CALCULATING YOUR LUCK...';
+                
+                setTimeout(() => {
+                    this.textContent = '💰 YOU HIT THE JACKPOT!';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'mailto:joshua369x@gmail.com?subject=Bot7x.com%20Domain%20Acquisition%20(Lucky%20Deal)&body=I%27m%20interested%20in%20acquiring%20Bot7x.com%20for%20%2412,700%20via%20the%203-lucky-payment%20plan.%20Let%27s%20make%20it%20happen!';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.background = 'linear-gradient(90deg, var(--bot-blue), var(--luck-gold))';
+                        }, 2000);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        });
+        
+        // 幸运邮箱交互
+        emailDisplay.addEventListener('click', function() {
+            const originalText = this.textContent;
+            this.textContent = '📧 EMAIL COPIED WITH GOOD LUCK!';
+            this.style.background = 'rgba(0, 255, 0, 0.2)';
+            this.style.color = '#00ff00';
+            
+            navigator.clipboard.writeText('joshua369x@gmail.com').then(() => {
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = 'rgba(255, 215, 0, 0.1)';
+                    this.style.color = 'var(--luck-gold)';
+                }, 1500);
+            });
+        });
+        
+        // 幸运键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '7') {
+                // 触发幸运效果
+                document.querySelector('.logo-7').style.transform = 'scale(1.3)';
+                document.querySelector('.logo-7').style.color = '#FF4500';
+                
+                // 添加幸运符号雨
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const symbols = ['🍀', '💰', '🎯', '🏆', '✨'];
+                        const symbol = document.createElement('div');
+                        symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                        symbol.style.position = 'fixed';
+                        symbol.style.top = '-50px';
+                        symbol.style.left = `${Math.random() * 100}vw`;
+                        symbol.style.fontSize = '2rem';
+                        symbol.style.zIndex = '9999';
+                        symbol.style.animation = 'fallDown 2s linear forwards';
+                        document.body.appendChild(symbol);
+                        
+                        setTimeout(() => {
+                            symbol.remove();
+                        }, 2000);
+                    }, i * 100);
+                }
+                
+                setTimeout(() => {
+                    document.querySelector('.logo-7').style.transform = '';
+                    document.querySelector('.logo-7').style.color = '';
+                }, 1000);
+            }
+        });
+        
+        // 添加下落动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fallDown {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 页面加载效果
+        window.addEventListener('load', () => {
+            document.querySelector('.logo').style.opacity = '1';
+            
+            // 延迟显示优势卡片
+            const advantages = document.querySelectorAll('.advantage');
+            advantages.forEach((advantage, index) => {
+                setTimeout(() => {
+                    advantage.style.opacity = '1';
+                    advantage.style.transform = 'translateY(0)';
+                }, 300 + index * 150);
+            });
+        });
+    </script>
+</body>
+</html>
